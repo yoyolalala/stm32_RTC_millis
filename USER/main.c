@@ -9,6 +9,7 @@ void setup()
 	delay_init(168);    //初始化延时函数
 	uart_init(38400);
 	My_RTC_Init();
+	millisInit();
 }
 
 int main(void)
@@ -17,5 +18,6 @@ int main(void)
 	while(1)
 	{
 		printf("secs = %lu\r\n",secs());
+		printf("millis = %llu\r\n\r\n",millis());
 	}	
 }

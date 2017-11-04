@@ -3,7 +3,7 @@
 #include "usart.h" 
 
 NVIC_InitTypeDef   NVIC_InitStructure;
-//static uint64_t nowMillis = 0;
+static uint64_t nowMillis = 0;
 
 //RTC时间设置
 //hour,min,sec:小时,分钟,秒钟
@@ -176,7 +176,7 @@ void RTC_WKUP_IRQHandler(void)
 {    
 	if(RTC_GetFlagStatus(RTC_FLAG_WUTF)==SET)//WK_UP中断?
 	{ 
-		//nowMillis += 2.048;
+		nowMillis += 125;
 		RTC_ClearFlag(RTC_FLAG_WUTF);	//清除中断标志
 	}   
 	EXTI_ClearITPendingBit(EXTI_Line22);//清除中断线22的中断标志 								
@@ -191,13 +191,13 @@ unsigned long secs(void)
 	return nowTime;
 }
 
-//void millisInit(void)
-//{
-//	My_RTC_Init();
-//	RTC_Set_WakeUp(RTC_WakeUpClock_RTCCLK_Div16,0);
-//}
+void millisInit(void)
+{
+	My_RTC_Init();
+	RTC_Set_WakeUp(RTC_WakeUpClock_RTCCLK_Div16,255);
+}
 
-//uint64_t millis(void)
-//{
-//	return nowMillis;
-//}
+uint64_t millis(void)
+{
+	return nowMillis;
+}
